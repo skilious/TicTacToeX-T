@@ -1,4 +1,5 @@
 #include <iostream>
+#include<time.h> 
 #include "XO.h"
 using namespace std;
 
@@ -6,32 +7,127 @@ void TTT::PvA()
 {
 	while (gameRunning == true)
 	{
-		Display();
+		srand(time(0));
+
+		// player's turn
 		cout << "Your turn!\n";
-		cin >> playerPos;
-		if (currentPos[playerPos - 1] == 'X' || currentPos[playerPos - 1] == 'O')
+		do // doWhile loop for avaliability
 		{
-			cout << "This position already exists with either X or O!\n";
-		}
-		else
+			do // doWhile loop for validity
+			{
+				cin >> playerPos;
+				if ((playerPos) <= 0 || (playerPos) >= 10) 
+				{
+					cout << "Invalid selection!\nChoose a number!\n";
+
+				}
+
+			} while ((playerPos) <= 0 || (playerPos) >= 10);
+
+			if (currentPos[playerPos - 1] == 'X' || currentPos[playerPos - 1] == 'O')
+			{
+				cout << "This position already exists with either X or O!\n";
+			}
+
+		} while (currentPos[playerPos - 1] == 'X' || currentPos[playerPos - 1] == 'O');
+
+		currentPos[playerPos - 1] = 'X';	// the player sees the squares as 1-9 but the array is listed as 0-8
+											// so for coding sake we hardcode one off
+
+		// show the screen
+		Display();
+
+		// check winnings
+		Tie();
+		WinCheck();
+
+		if (gameRunning == false)
+			break;
+
+		// AI's turn
+		cout << "AI's turn!\n";
+		do // doWhile loop for avaliability -- if the rand cant find a spot it infinitly loops FIX
 		{
-			currentPos[playerPos - 1] = 'X';
+			opponentPos = rand() % 9 + 1; // rn we're just selecting a random number
+			cout << opponentPos << endl;
 
-		}
+		} while (currentPos[opponentPos - 1] == 'X' || currentPos[opponentPos - 1] == 'O');
+		currentPos[opponentPos - 1] = 'O';
 
-		if ((playerPos) <= 0 || (playerPos) >= 10)
-		{
-			cout << "Invalid selection!\nChoose a number!\n";
+		// show the screen
+		Display();
 
-		}
+		// check winnings
+		Tie();
+		WinCheck();
 	}
 }
 
+void TTT::Tie()
+{
+	if (currentPos[0] != ' ' && currentPos[1] != ' ' && currentPos[2] != ' ' && 
+		currentPos[3] != ' ' && currentPos[4] != ' ' && currentPos[5] != ' ' && 
+		currentPos[6] != ' ' && currentPos[7] != ' ' && currentPos[8] != ' ')	// checking if every space is used
+	{
+		cout << "Game is a tie!" << endl << endl;
+		gameRunning = false;
+	}
+}
+
+void TTT::WinCheck() // this checks all the options says who wins
+{
+	if (currentPos[0] == currentPos[1] == currentPos[2])
+	{
+		gameRunning = false;
+		cout << currentPos[1] << " wins!" << endl;
+	}
+	else if (currentPos[3] == currentPos[4] == currentPos[5])
+	{
+		gameRunning = false;
+		cout << currentPos[4] << " wins!" << endl;
+	}
+	else if (currentPos[6] == currentPos[7] == currentPos[8])
+	{
+		gameRunning = false;
+		cout << currentPos[7] << " wins!" << endl;
+	}
+	else if (currentPos[0] == currentPos[3] == currentPos[6])
+	{
+		gameRunning = false;
+		cout << currentPos[3] << " wins!" << endl;
+	}
+	else if (currentPos[1] == currentPos[4] == currentPos[7])
+	{
+		gameRunning = false;
+		cout << currentPos[4] << " wins!" << endl;
+	}
+	else if (currentPos[2] == currentPos[5] == currentPos[8])
+	{
+		gameRunning = false;
+		cout << currentPos[5] << " wins!" << endl;
+	}
+	else if (currentPos[1] == currentPos[5] == currentPos[8])
+	{
+		gameRunning = false;
+		cout << currentPos[5] << " wins!" << endl;
+	}
+	else if (currentPos[2] == currentPos[4] == currentPos[6])
+	{
+		gameRunning = false;
+		cout << currentPos[4] << " wins!" << endl;
+	}
+	else
+	{
+		cout << "no match" << endl;
+	}
+}
 
 void TTT::Display()
 {
 	cout << "\n" << currentPos[0] << "|" << currentPos[1] << "|" << currentPos[2] << endl;
+	cout << "-+-+-" << endl;
 	cout << currentPos[3] << "|" << currentPos[4] << "|" << currentPos[5] << endl;
+	cout << "-+-+-" << endl;
 	cout << currentPos[6] << "|" << currentPos[7] << "|" << currentPos[8] << "\n\n";
 }
 
