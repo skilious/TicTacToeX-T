@@ -38,7 +38,7 @@ void TTT::PvA()
 		Display();
 
 		// check winnings
-		Tie();
+		TieCheck();
 		WinCheck();
 
 		if (gameRunning == false)
@@ -58,12 +58,12 @@ void TTT::PvA()
 		Display();
 
 		// check winnings
-		Tie();
+		TieCheck();
 		WinCheck();
 	}
 }
 
-void TTT::Tie()
+void TTT::TieCheck()
 {
 	if (currentPos[0] != ' ' && currentPos[1] != ' ' && currentPos[2] != ' ' && 
 		currentPos[3] != ' ' && currentPos[4] != ' ' && currentPos[5] != ' ' && 
@@ -74,51 +74,47 @@ void TTT::Tie()
 	}
 }
 
-void TTT::WinCheck() // this checks all the options says who wins
+void TTT::WinCheck() // need another check for X and O
 {
-	if (currentPos[0] == currentPos[1] == currentPos[2])
+	if (currentPos[0] == currentPos[1] && currentPos[1] == currentPos[2] && (currentPos[1] == 'X' || currentPos[1] == 'O'))
 	{
 		gameRunning = false;
-		cout << currentPos[1] << " wins!" << endl;
+		cout << currentPos[1] << " wins!" << endl << endl;
 	}
-	else if (currentPos[3] == currentPos[4] == currentPos[5])
+	else if (currentPos[3] == currentPos[4] && currentPos[4] == currentPos[5] && (currentPos[4] == 'X' || currentPos[4] == 'O'))
 	{
 		gameRunning = false;
-		cout << currentPos[4] << " wins!" << endl;
+		cout << currentPos[4] << " wins!" << endl << endl;
 	}
-	else if (currentPos[6] == currentPos[7] == currentPos[8])
+	else if (currentPos[6] == currentPos[7] && currentPos[7] == currentPos[8] && (currentPos[7] == 'X' || currentPos[7] == 'O'))
 	{
 		gameRunning = false;
-		cout << currentPos[7] << " wins!" << endl;
+		cout << currentPos[7] << " wins!" << endl << endl;
 	}
-	else if (currentPos[0] == currentPos[3] == currentPos[6])
+	else if (currentPos[0] == currentPos[3] && currentPos[3] == currentPos[6] && (currentPos[3] == 'X' || currentPos[3] == 'O'))
 	{
 		gameRunning = false;
-		cout << currentPos[3] << " wins!" << endl;
+		cout << currentPos[3] << " wins!" << endl << endl;
 	}
-	else if (currentPos[1] == currentPos[4] == currentPos[7])
+	else if (currentPos[1] == currentPos[4] && currentPos[4] == currentPos[7] && (currentPos[4] == 'X' || currentPos[4] == 'O'))
 	{
 		gameRunning = false;
-		cout << currentPos[4] << " wins!" << endl;
+		cout << currentPos[4] << " wins!" << endl << endl;
 	}
-	else if (currentPos[2] == currentPos[5] == currentPos[8])
+	else if (currentPos[2] == currentPos[5] && currentPos[5] == currentPos[8] && (currentPos[5] == 'X' || currentPos[5] == 'O'))
 	{
 		gameRunning = false;
-		cout << currentPos[5] << " wins!" << endl;
+		cout << currentPos[5] << " wins!" << endl << endl;
 	}
-	else if (currentPos[1] == currentPos[5] == currentPos[8])
+	else if (currentPos[1] == currentPos[5] && currentPos[5] == currentPos[8] && (currentPos[5] == 'X' || currentPos[5] == 'O'))
 	{
 		gameRunning = false;
-		cout << currentPos[5] << " wins!" << endl;
+		cout << currentPos[5] << " wins!" << endl << endl;
 	}
-	else if (currentPos[2] == currentPos[4] == currentPos[6])
+	else if (currentPos[2] == currentPos[4] && currentPos[4] == currentPos[6] && (currentPos[4] == 'X' || currentPos[4] == 'O'))
 	{
 		gameRunning = false;
-		cout << currentPos[4] << " wins!" << endl;
-	}
-	else
-	{
-		cout << "no match" << endl;
+		cout << currentPos[4] << " wins!" << endl << endl;
 	}
 }
 

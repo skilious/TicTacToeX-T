@@ -18,5 +18,5 @@ public:
 	void PvA();
 	void Display();
 	void WinCheck();
-	void Tie();
+	void TieCheck();
 };
