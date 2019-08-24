@@ -16,7 +16,7 @@ void TTT::PvA()
 		else
 		{
 			currentPos[playerPos - 1] = 'X';
-			
+
 		}
 
 		if ((playerPos) <= 0 || (playerPos) >= 10)
@@ -48,15 +48,15 @@ void TTT::menuPrint()
 		{
 		case 1:
 			cout << "Player vs Player Selection!\n";
-				
+
 			break;
 		case 2:
 			cout << "Player vs CPU Selected!\n";
 			gameRunning = true;
 			PvA();
-				//Have the file read to check history of wins/losses against CPU.
-				//if doesn't exist, create a file & make the history from there.
-				//Function to start the gamemode.
+			//Have the file read to check history of wins/losses against CPU.
+			//if doesn't exist, create a file & make the history from there.
+			//Function to start the gamemode.
 			break;
 		case 3:
 			cout << "CPU vs CPU Selected!\n";
