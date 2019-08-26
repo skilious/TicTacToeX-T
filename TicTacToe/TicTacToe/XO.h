@@ -15,8 +15,14 @@ public:
 
 	// functions
 	void menuPrint();
+	
+	void PvP();
 	void PvA();
+	void AvA();
+
 	void Display();
 	void WinCheck();
 	void TieCheck();
+	void Clear();
+	void Protecc();
 };
