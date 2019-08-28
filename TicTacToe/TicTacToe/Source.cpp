@@ -7,14 +7,21 @@
 #include <string>
 using namespace std;
 
+ofstream outputFile;
+ifstream inputFile;
+string name = "";
+int score;
+
 void TTT::PvP()
 {
+	string player2 = "";
+	cout << "\nPass the keyboard for Player 2's username\n";
+	cout << "\nEnter your username for Player 2\n";
+	cin >> player2;
 	while (gameRunning == true)
 	{
-		srand(time(0));
-
 		// X's turn
-		cout << "X's turn!\n";
+		cout << name << "'s turn!\n";
 		do // doWhile loop for avaliability
 		{
 			do // doWhile loop for validity
@@ -52,7 +59,7 @@ void TTT::PvP()
 		}
 
 		// O's turn
-		cout << "O's turn!\n";
+		cout << player2 << "'s turn!\n";
 		do // doWhile loop for avaliability
 		{
 			do // doWhile loop for validity
@@ -95,7 +102,7 @@ void TTT::PvA()
 	while (gameRunning == true)
 	{
 		srand(time(0));
-		
+
 		// player's turn
 		cout << "Your turn!\n";
 		do // doWhile loop for avaliability
@@ -103,7 +110,7 @@ void TTT::PvA()
 			do // doWhile loop for validity
 			{
 				cin >> playerPos;
-				if ((playerPos) <= 0 || (playerPos) >= 10) 
+				if ((playerPos) <= 0 || (playerPos) >= 10)
 				{
 					cout << "Invalid selection!\nChoose a number!\n";
 
@@ -133,7 +140,7 @@ void TTT::PvA()
 			system("pause");
 			break;
 		}
-			
+
 
 		// AI's turn
 		cout << "AI's turn!\n";
@@ -226,8 +233,8 @@ void TTT::AvA()
 
 void TTT::TieCheck()
 {
-	if (currentPos[0] != ' ' && currentPos[1] != ' ' && currentPos[2] != ' ' && 
-		currentPos[3] != ' ' && currentPos[4] != ' ' && currentPos[5] != ' ' && 
+	if (currentPos[0] != ' ' && currentPos[1] != ' ' && currentPos[2] != ' ' &&
+		currentPos[3] != ' ' && currentPos[4] != ' ' && currentPos[5] != ' ' &&
 		currentPos[6] != ' ' && currentPos[7] != ' ' && currentPos[8] != ' ')	// checking if every space is used
 	{
 		cout << "Game is a tie!" << endl << endl;
@@ -241,41 +248,89 @@ void TTT::WinCheck() // need another check for X and O
 	{
 		gameRunning = false;
 		cout << currentPos[1] << " wins!" << endl << endl;
+		if (currentPos[1] == 'X')
+		{
+			score += 1;
+			outputFile << score;
+			cout << "You've gained one win!\n";
+		}
 	}
 	else if (currentPos[3] == currentPos[4] && currentPos[4] == currentPos[5] && (currentPos[4] == 'X' || currentPos[4] == 'O'))
 	{
 		gameRunning = false;
 		cout << currentPos[4] << " wins!" << endl << endl;
+		if (currentPos[4] == 'X')
+		{
+			score += 1;
+			outputFile << score;
+			cout << "You've gained one win!\n";
+		}
 	}
 	else if (currentPos[6] == currentPos[7] && currentPos[7] == currentPos[8] && (currentPos[7] == 'X' || currentPos[7] == 'O'))
 	{
 		gameRunning = false;
 		cout << currentPos[7] << " wins!" << endl << endl;
+		if (currentPos[7] == 'X')
+		{
+			score += 1;
+			outputFile << score;
+			cout << "You've gained one win!\n";
+		}
 	}
 	else if (currentPos[0] == currentPos[3] && currentPos[3] == currentPos[6] && (currentPos[3] == 'X' || currentPos[3] == 'O'))
 	{
 		gameRunning = false;
 		cout << currentPos[3] << " wins!" << endl << endl;
+		if (currentPos[3] == 'X')
+		{
+			score += 1;
+			outputFile << score;
+			cout << "You've gained one win!\n";
+		}
 	}
 	else if (currentPos[1] == currentPos[4] && currentPos[4] == currentPos[7] && (currentPos[4] == 'X' || currentPos[4] == 'O'))
 	{
 		gameRunning = false;
 		cout << currentPos[4] << " wins!" << endl << endl;
+		if (currentPos[4] == 'X')
+		{
+			score += 1;
+			outputFile << score;
+			cout << "You've gained one win!\n";
+		}
 	}
 	else if (currentPos[2] == currentPos[5] && currentPos[5] == currentPos[8] && (currentPos[5] == 'X' || currentPos[5] == 'O'))
 	{
 		gameRunning = false;
 		cout << currentPos[5] << " wins!" << endl << endl;
+		if (currentPos[5] == 'X')
+		{
+			score += 1;
+			outputFile << score;
+			cout << "You've gained one win!\n";
+		}
 	}
 	else if (currentPos[0] == currentPos[4] && currentPos[4] == currentPos[8] && (currentPos[4] == 'X' || currentPos[4] == 'O'))
 	{
 		gameRunning = false;
 		cout << currentPos[4] << " wins!" << endl << endl;
+		if (currentPos[4] == 'X')
+		{
+			score += 1;
+			outputFile << score;
+			cout << "You've gained one win!\n";
+		}
 	}
 	else if (currentPos[2] == currentPos[4] && currentPos[4] == currentPos[6] && (currentPos[4] == 'X' || currentPos[4] == 'O'))
 	{
 		gameRunning = false;
 		cout << currentPos[4] << " wins!" << endl << endl;
+		if (currentPos[4] == 'X')
+		{
+			score += 1;
+			outputFile << score;
+			cout << "You've gained one win!\n";
+		}
 	}
 
 }
@@ -311,48 +366,43 @@ void TTT::Protecc()
 	}
 }
 
-void TTT::menuPrint()
+void Saves()
 {
+	cout << "Type in your username.\n(Case Sensitive)\n";
 
-	int score;
-	int fileN;
-	int options;
-	ifstream inputFile;
-
-	string name = "";
-	
-	cout << "Type in your username.\n";
 	cin >> name;
-
+	cout << "\nName: " + name << endl;
 	inputFile.open(name + ".txt");
-	
 
 	if (inputFile)
 	{
-		cout << "It exists!\n";
+		cout << "\n\nIt exists!\n";
 		cout << "Welcome " + name + "!\n";
+
 		inputFile >> score;
 		cout << "Your current win is: " << score << endl;
+		outputFile.open(name + ".txt");
 		system("pause");
 	}
 	else
-	if (!inputFile)
-	{
-		cout << "Your username is: " + name << endl;
-		score = 0;
-		ofstream outFile;
-		outFile.open(name + ".txt");
-		system("pause");
+		if (!inputFile)
+		{
+			cout << "Your username is: " + name << endl;
+			outputFile.open(name + ".txt");
+			outputFile << score;
+			system("pause");
+		}
+}
 
-	}
-	
-	
+void TTT::menuPrint()
+{
+	int options;
 	//When gameOver is false, this goes on until gameOver is true and then quits.
 	while (gameOver == false)
 	{
 		system("cls");
-
-		cout << "Main Menu\n1) Player vs Player \n2) Player vs CPU\n3) CPU vs CPU\n4) Quit\n";
+		inputFile >> score;
+		cout << "Main Menu\n1) Player vs Player \n2) Player vs CPU\n3) CPU vs CPU\n4) Player Stats\n5) Quit\n\n";
 		cin >> options;
 		switch (options)
 		{
@@ -383,6 +433,12 @@ void TTT::menuPrint()
 
 			break;
 		case 4:
+			system("cls");
+			cout << "Current wins: " << score << " - Against CPU\n\n";
+			system("pause");
+			break;
+
+		case 5:
 			cout << "Quitting game\n";
 			gameOver = true;
 			break;
@@ -401,5 +457,6 @@ void TTT::menuPrint()
 int main()
 {
 	TTT XO;
+	Saves();
 	XO.menuPrint();
 }

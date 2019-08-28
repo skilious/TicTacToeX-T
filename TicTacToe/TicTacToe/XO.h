@@ -7,6 +7,7 @@ struct TTT
 	int opponentPos;
 
 public:
+
 	// game loop
 	bool gameOver = false;
 	bool gameRunning = false;
