@@ -3,6 +3,8 @@
 #include "XO.h"
 #include <chrono>
 #include <thread>
+#include <fstream>
+#include <string>
 using namespace std;
 
 void TTT::PvP()
@@ -311,7 +313,40 @@ void TTT::Protecc()
 
 void TTT::menuPrint()
 {
+
+	int score;
+	int fileN;
 	int options;
+	ifstream inputFile;
+
+	string name = "";
+	
+	cout << "Type in your username.\n";
+	cin >> name;
+
+	inputFile.open(name + ".txt");
+	
+
+	if (inputFile)
+	{
+		cout << "It exists!\n";
+		cout << "Welcome " + name + "!\n";
+		inputFile >> score;
+		cout << "Your current win is: " << score << endl;
+		system("pause");
+	}
+	else
+	if (!inputFile)
+	{
+		cout << "Your username is: " + name << endl;
+		score = 0;
+		ofstream outFile;
+		outFile.open(name + ".txt");
+		system("pause");
+
+	}
+	
+	
 	//When gameOver is false, this goes on until gameOver is true and then quits.
 	while (gameOver == false)
 	{
