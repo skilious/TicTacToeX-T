@@ -10,7 +10,7 @@ using namespace std;
 ofstream outputFile;
 ifstream inputFile;
 string name = "";
-int score;
+int PvAScore, PvPScore, AvAScore;
 
 void TTT::PvP()
 {
@@ -54,6 +54,7 @@ void TTT::PvP()
 
 		if (gameRunning == false)
 		{
+			PvPScore++;
 			system("pause");
 			break;
 		}
@@ -137,6 +138,8 @@ void TTT::PvA()
 
 		if (gameRunning == false)
 		{
+			PvAScore++;
+			cout << name << " wins\n\n";
 			system("pause");
 			break;
 		}
@@ -195,6 +198,7 @@ void TTT::AvA()
 
 		if (gameRunning == false)
 		{
+			cout << "X wins";
 			system("pause");
 			break;
 		}
@@ -250,8 +254,6 @@ void TTT::WinCheck() // need another check for X and O
 		cout << currentPos[1] << " wins!" << endl << endl;
 		if (currentPos[1] == 'X')
 		{
-			score += 1;
-			outputFile << score;
 			cout << "You've gained one win!\n";
 		}
 	}
@@ -261,8 +263,6 @@ void TTT::WinCheck() // need another check for X and O
 		cout << currentPos[4] << " wins!" << endl << endl;
 		if (currentPos[4] == 'X')
 		{
-			score += 1;
-			outputFile << score;
 			cout << "You've gained one win!\n";
 		}
 	}
@@ -272,8 +272,6 @@ void TTT::WinCheck() // need another check for X and O
 		cout << currentPos[7] << " wins!" << endl << endl;
 		if (currentPos[7] == 'X')
 		{
-			score += 1;
-			outputFile << score;
 			cout << "You've gained one win!\n";
 		}
 	}
@@ -283,8 +281,6 @@ void TTT::WinCheck() // need another check for X and O
 		cout << currentPos[3] << " wins!" << endl << endl;
 		if (currentPos[3] == 'X')
 		{
-			score += 1;
-			outputFile << score;
 			cout << "You've gained one win!\n";
 		}
 	}
@@ -294,8 +290,6 @@ void TTT::WinCheck() // need another check for X and O
 		cout << currentPos[4] << " wins!" << endl << endl;
 		if (currentPos[4] == 'X')
 		{
-			score += 1;
-			outputFile << score;
 			cout << "You've gained one win!\n";
 		}
 	}
@@ -305,8 +299,6 @@ void TTT::WinCheck() // need another check for X and O
 		cout << currentPos[5] << " wins!" << endl << endl;
 		if (currentPos[5] == 'X')
 		{
-			score += 1;
-			outputFile << score;
 			cout << "You've gained one win!\n";
 		}
 	}
@@ -316,8 +308,6 @@ void TTT::WinCheck() // need another check for X and O
 		cout << currentPos[4] << " wins!" << endl << endl;
 		if (currentPos[4] == 'X')
 		{
-			score += 1;
-			outputFile << score;
 			cout << "You've gained one win!\n";
 		}
 	}
@@ -327,8 +317,6 @@ void TTT::WinCheck() // need another check for X and O
 		cout << currentPos[4] << " wins!" << endl << endl;
 		if (currentPos[4] == 'X')
 		{
-			score += 1;
-			outputFile << score;
 			cout << "You've gained one win!\n";
 		}
 	}
@@ -379,8 +367,9 @@ void Saves()
 		cout << "\n\nIt exists!\n";
 		cout << "Welcome " + name + "!\n";
 
-		inputFile >> score;
-		cout << "Your current win is: " << score << endl;
+		inputFile >> PvAScore >> PvPScore;
+		cout << "Your current win is: " << PvAScore << " - Against CPU\n";
+		cout << "Your current win is: " << PvPScore << " - Against Player 2\n\n";
 		outputFile.open(name + ".txt");
 		system("pause");
 	}
@@ -389,7 +378,7 @@ void Saves()
 		{
 			cout << "Your username is: " + name << endl;
 			outputFile.open(name + ".txt");
-			outputFile << score;
+			outputFile << PvAScore << PvPScore;
 			system("pause");
 		}
 }
@@ -401,7 +390,7 @@ void TTT::menuPrint()
 	while (gameOver == false)
 	{
 		system("cls");
-		inputFile >> score;
+		inputFile >> PvAScore >> PvPScore;
 		cout << "Main Menu\n1) Player vs Player \n2) Player vs CPU\n3) CPU vs CPU\n4) Player Stats\n5) Quit\n\n";
 		cin >> options;
 		switch (options)
@@ -434,7 +423,8 @@ void TTT::menuPrint()
 			break;
 		case 4:
 			system("cls");
-			cout << "Current wins: " << score << " - Against CPU\n\n";
+			cout << "Current wins: " << PvAScore << " - Against CPU\n\n";
+			cout << "Current wins: " << PvPScore << " - Against Player 2\n\n";
 			system("pause");
 			break;
 
@@ -450,6 +440,10 @@ void TTT::menuPrint()
 		}
 	}
 	//Quits here.
+	outputFile << PvAScore;
+	outputFile << PvPScore;
+	inputFile.close();
+	outputFile.close();
 	system("pause");
 	exit(1);
 }
