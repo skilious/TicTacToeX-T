@@ -1,6 +1,8 @@
 #include <iostream>
 #include<time.h> 
 #include "XO.h"
+#include <chrono>
+#include <thread>
 using namespace std;
 
 void TTT::PvP()
@@ -42,7 +44,10 @@ void TTT::PvP()
 		TieCheck();
 
 		if (gameRunning == false)
+		{
+			system("pause");
 			break;
+		}
 
 		// O's turn
 		cout << "O's turn!\n";
@@ -75,6 +80,11 @@ void TTT::PvP()
 		// check winnings
 		WinCheck();
 		TieCheck();
+
+		if (gameRunning == false)
+		{
+			system("pause");
+		}
 	}
 }
 
@@ -117,7 +127,11 @@ void TTT::PvA()
 		TieCheck();
 
 		if (gameRunning == false)
+		{
+			system("pause");
 			break;
+		}
+			
 
 		// AI's turn
 		cout << "AI's turn!\n";
@@ -125,9 +139,10 @@ void TTT::PvA()
 		do // doWhile loop for avaliability -- if the rand cant find a spot it infinitly loops FIX
 		{
 			opponentPos = rand() % 9 + 1; // rn we're just selecting a random number
-			cout << opponentPos << endl;
 
 		} while (currentPos[opponentPos - 1] == 'X' || currentPos[opponentPos - 1] == 'O');
+		this_thread::sleep_for(chrono::seconds(1));
+		cout << opponentPos << endl;
 		currentPos[opponentPos - 1] = 'O';
 
 		// show the screen
@@ -136,6 +151,11 @@ void TTT::PvA()
 		// check winnings
 		WinCheck();
 		TieCheck();
+
+		if (gameRunning == false)
+		{
+			system("pause");
+		}
 	}
 }
 
@@ -153,6 +173,7 @@ void TTT::AvA()
 			opponentPos = rand() % 9 + 1; // rn we're just selecting a random number
 
 		} while (currentPos[opponentPos - 1] == 'X' || currentPos[opponentPos - 1] == 'O');
+		this_thread::sleep_for(chrono::seconds(1));
 		cout << opponentPos << endl;
 		currentPos[opponentPos - 1] = 'X';
 
@@ -164,7 +185,10 @@ void TTT::AvA()
 		TieCheck();
 
 		if (gameRunning == false)
+		{
+			system("pause");
 			break;
+		}
 
 		// AI's turn
 		cout << "AI O's turn!\n";
@@ -174,6 +198,7 @@ void TTT::AvA()
 			opponentPos = rand() % 9 + 1; // rn we're just selecting a random number
 
 		} while (currentPos[opponentPos - 1] == 'X' || currentPos[opponentPos - 1] == 'O');
+		this_thread::sleep_for(chrono::seconds(1));
 		cout << opponentPos << endl;
 		currentPos[opponentPos - 1] = 'O';
 
@@ -183,6 +208,11 @@ void TTT::AvA()
 		// check winnings
 		WinCheck();
 		TieCheck();
+
+		if (gameRunning == false)
+		{
+			system("pause");
+		}
 	}
 }
 
@@ -190,7 +220,6 @@ void TTT::AvA()
 
 // ------------------------------------------------------------------------------------------ \\
 // ------------------------------------------------------------------------------------------ \\
-
 
 
 void TTT::TieCheck()
@@ -236,20 +265,22 @@ void TTT::WinCheck() // need another check for X and O
 		gameRunning = false;
 		cout << currentPos[5] << " wins!" << endl << endl;
 	}
-	else if (currentPos[1] == currentPos[5] && currentPos[5] == currentPos[8] && (currentPos[5] == 'X' || currentPos[5] == 'O'))
+	else if (currentPos[0] == currentPos[4] && currentPos[4] == currentPos[8] && (currentPos[4] == 'X' || currentPos[4] == 'O'))
 	{
 		gameRunning = false;
-		cout << currentPos[5] << " wins!" << endl << endl;
+		cout << currentPos[4] << " wins!" << endl << endl;
 	}
 	else if (currentPos[2] == currentPos[4] && currentPos[4] == currentPos[6] && (currentPos[4] == 'X' || currentPos[4] == 'O'))
 	{
 		gameRunning = false;
 		cout << currentPos[4] << " wins!" << endl << endl;
 	}
+
 }
 
 void TTT::Display()
 {
+	system("cls");
 	cout << "\n" << currentPos[0] << "|" << currentPos[1] << "|" << currentPos[2] << endl;
 	cout << "-+-+-" << endl;
 	cout << currentPos[3] << "|" << currentPos[4] << "|" << currentPos[5] << endl;
@@ -263,8 +294,6 @@ void TTT::Clear()
 	{
 		currentPos[i] = ' ';
 	}
-
-
 }
 
 void TTT::Protecc()
@@ -286,6 +315,7 @@ void TTT::menuPrint()
 	//When gameOver is false, this goes on until gameOver is true and then quits.
 	while (gameOver == false)
 	{
+		system("cls");
 
 		cout << "Main Menu\n1) Player vs Player \n2) Player vs CPU\n3) CPU vs CPU\n4) Quit\n";
 		cin >> options;
