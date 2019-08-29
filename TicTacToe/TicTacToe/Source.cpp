@@ -5,12 +5,13 @@
 #include <thread>
 #include <fstream>
 #include <string>
+#include <array>
 using namespace std;
 
 ofstream outputFile;
 ifstream inputFile;
 string name = "";
-int PvAScore, PvPScore, AvAScore;
+int PvAScore, PvPScore;
 
 void TTT::PvP()
 {
@@ -19,15 +20,21 @@ void TTT::PvP()
 	cout << "\nEnter your username for Player 2\n";
 	cin >> player2;
 	while (gameRunning == true)
-	{
-		// X's turn
+	{		// X's turn
 		cout << name << "'s turn!\n";
 		do // doWhile loop for avaliability
 		{
 			do // doWhile loop for validity
 			{
 				cin >> playerPos;
-				if ((playerPos) <= 0 || (playerPos) >= 10)
+				Protecc();
+
+				if (playerPos >= 11)
+				{
+					cout << "Board has been cleared!\n\n";
+					Clear();
+				}
+				if ((playerPos) <= 0 || (playerPos) == 10)
 				{
 					cout << "Invalid selection!\nChoose a number!\n";
 
@@ -51,10 +58,12 @@ void TTT::PvP()
 		// check winnings
 		WinCheck();
 		TieCheck();
-
 		if (gameRunning == false)
 		{
+			outputFile.open(name + ".txt");
 			PvPScore++;
+			outputFile << PvAScore << " " << PvPScore;
+			outputFile.close();
 			system("pause");
 			break;
 		}
@@ -66,7 +75,14 @@ void TTT::PvP()
 			do // doWhile loop for validity
 			{
 				cin >> playerPos;
-				if ((playerPos) <= 0 || (playerPos) >= 10)
+				Protecc();
+
+				if (playerPos >= 11)
+				{
+					cout << "Board has been cleared!\n\n";
+					Clear();
+				}
+				if ((playerPos) <= 0 || (playerPos) == 10)
 				{
 					cout << "Invalid selection!\nChoose a number!\n";
 
@@ -90,7 +106,6 @@ void TTT::PvP()
 		// check winnings
 		WinCheck();
 		TieCheck();
-
 		if (gameRunning == false)
 		{
 			system("pause");
@@ -111,7 +126,14 @@ void TTT::PvA()
 			do // doWhile loop for validity
 			{
 				cin >> playerPos;
-				if ((playerPos) <= 0 || (playerPos) >= 10)
+				Protecc();
+				if (playerPos >= 11)
+				{
+					cout << "Board has been cleared!\n\n";
+					Clear();
+				}
+
+				if ((playerPos) <= 0 || (playerPos) == 10)
 				{
 					cout << "Invalid selection!\nChoose a number!\n";
 
@@ -138,7 +160,10 @@ void TTT::PvA()
 
 		if (gameRunning == false)
 		{
+			outputFile.open(name + ".txt");
 			PvAScore++;
+			outputFile << PvAScore << " " << PvPScore;
+			outputFile.close();
 			cout << name << " wins\n\n";
 			system("pause");
 			break;
@@ -198,7 +223,6 @@ void TTT::AvA()
 
 		if (gameRunning == false)
 		{
-			cout << "X wins";
 			system("pause");
 			break;
 		}
@@ -326,6 +350,7 @@ void TTT::WinCheck() // need another check for X and O
 void TTT::Display()
 {
 	system("cls");
+	cout << "Any number above 10 will clear the Board!\n\n";
 	cout << "\n" << currentPos[0] << "|" << currentPos[1] << "|" << currentPos[2] << endl;
 	cout << "-+-+-" << endl;
 	cout << currentPos[3] << "|" << currentPos[4] << "|" << currentPos[5] << endl;
@@ -335,6 +360,7 @@ void TTT::Display()
 
 void TTT::Clear()
 {
+	memset(&(currentPos[10]), 0, 10);
 	for (int i = 0; i < 10; i++)
 	{
 		currentPos[i] = ' ';
@@ -370,7 +396,7 @@ void Saves()
 		inputFile >> PvAScore >> PvPScore;
 		cout << "Your current win is: " << PvAScore << " - Against CPU\n";
 		cout << "Your current win is: " << PvPScore << " - Against Player 2\n\n";
-		outputFile.open(name + ".txt");
+
 		system("pause");
 	}
 	else
@@ -379,6 +405,7 @@ void Saves()
 			cout << "Your username is: " + name << endl;
 			outputFile.open(name + ".txt");
 			outputFile << PvAScore << PvPScore;
+			outputFile.close();
 			system("pause");
 		}
 }
@@ -386,6 +413,7 @@ void Saves()
 void TTT::menuPrint()
 {
 	int options;
+	inputFile.close();
 	//When gameOver is false, this goes on until gameOver is true and then quits.
 	while (gameOver == false)
 	{
@@ -434,16 +462,13 @@ void TTT::menuPrint()
 			break;
 		default:
 			//This prevents the user from messing around during the input selection.
+
 			cout << endl << "Invalid selection\n" << endl;
 			Protecc();
 			break;
 		}
 	}
 	//Quits here.
-	outputFile << PvAScore;
-	outputFile << PvPScore;
-	inputFile.close();
-	outputFile.close();
 	system("pause");
 	exit(1);
 }

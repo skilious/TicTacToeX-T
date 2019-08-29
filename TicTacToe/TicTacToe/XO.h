@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 struct TTT
 {
 	// seperate inputs
@@ -12,8 +13,7 @@ public:
 	bool gameOver = false;
 	bool gameRunning = false;
 
-	char currentPos[10] = "         ";
-
+	char currentPos[10] = "        ";
 	// functions
 	void menuPrint();
 	
