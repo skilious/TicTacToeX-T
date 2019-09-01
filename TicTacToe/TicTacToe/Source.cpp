@@ -34,10 +34,11 @@ void TTT::PvP()
 					cout << "Board has been cleared!\n\n";
 					Clear();
 				}
-				if ((playerPos) <= 0 || (playerPos) == 10)
+				if ((playerPos) == 10)
 				{
-					cout << "Invalid selection!\nChoose a number!\n";
-
+					gameRunning = false;
+					quitGame = true;
+					break;
 				}
 
 			} while ((playerPos) <= 0 || (playerPos) >= 10);
@@ -60,10 +61,16 @@ void TTT::PvP()
 		TieCheck();
 		if (gameRunning == false)
 		{
-			outputFile.open(name + ".txt");
-			PvPScore++;
-			outputFile << PvAScore << " " << PvPScore;
-			outputFile.close();
+			if (quitGame == false)
+			{
+				outputFile.open(name + ".txt");
+				PvAScore++;
+				outputFile << PvAScore << " " << PvPScore;
+				outputFile.close();
+			}
+			else
+				cout << "Game has been quit." << endl;
+				quitGame = false;
 			system("pause");
 			break;
 		}
@@ -82,10 +89,11 @@ void TTT::PvP()
 					cout << "Board has been cleared!\n\n";
 					Clear();
 				}
-				if ((playerPos) <= 0 || (playerPos) == 10)
+				if ((playerPos) == 10)
 				{
-					cout << "Invalid selection!\nChoose a number!\n";
-
+					gameRunning = false;
+					quitGame = true;
+					break;
 				}
 
 			} while ((playerPos) <= 0 || (playerPos) >= 10);
@@ -108,6 +116,11 @@ void TTT::PvP()
 		TieCheck();
 		if (gameRunning == false)
 		{
+			if (quitGame == true)
+			{
+				cout << "Game has been quit." << endl;
+				quitGame = false;
+			}
 			system("pause");
 		}
 	}
@@ -133,10 +146,11 @@ void TTT::PvA()
 					Clear();
 				}
 
-				if ((playerPos) <= 0 || (playerPos) == 10)
+				if ((playerPos) == 10)
 				{
-					cout << "Invalid selection!\nChoose a number!\n";
-
+					gameRunning = false;
+					quitGame = true;
+					break;
 				}
 
 			} while ((playerPos) <= 0 || (playerPos) >= 10);
@@ -160,11 +174,17 @@ void TTT::PvA()
 
 		if (gameRunning == false)
 		{
-			outputFile.open(name + ".txt");
-			PvAScore++;
-			outputFile << PvAScore << " " << PvPScore;
-			outputFile.close();
-			cout << name << " wins\n\n";
+			if (quitGame == false)
+			{
+				outputFile.open(name + ".txt");
+				PvAScore++;
+				outputFile << PvAScore << " " << PvPScore;
+				outputFile.close();
+			}
+			else
+				cout << "Game has been quit." << endl;
+				quitGame = false;
+
 			system("pause");
 			break;
 		}
@@ -265,7 +285,7 @@ void TTT::TieCheck()
 		currentPos[3] != ' ' && currentPos[4] != ' ' && currentPos[5] != ' ' &&
 		currentPos[6] != ' ' && currentPos[7] != ' ' && currentPos[8] != ' ')	// checking if every space is used
 	{
-		cout << "Game is a tie!" << endl << endl;
+		cout << "No more possible moves!" << endl << endl;
 		gameRunning = false;
 	}
 }
@@ -305,7 +325,7 @@ void TTT::WinCheck() // need another check for X and O
 		cout << currentPos[3] << " wins!" << endl << endl;
 		if (currentPos[3] == 'X')
 		{
-			cout << "You've gained one win!\n";
+			cout << "You've gained one win!\n\n";
 		}
 	}
 	else if (currentPos[1] == currentPos[4] && currentPos[4] == currentPos[7] && (currentPos[4] == 'X' || currentPos[4] == 'O'))
@@ -314,7 +334,7 @@ void TTT::WinCheck() // need another check for X and O
 		cout << currentPos[4] << " wins!" << endl << endl;
 		if (currentPos[4] == 'X')
 		{
-			cout << "You've gained one win!\n";
+			cout << "You've gained one win!\n\n";
 		}
 	}
 	else if (currentPos[2] == currentPos[5] && currentPos[5] == currentPos[8] && (currentPos[5] == 'X' || currentPos[5] == 'O'))
@@ -323,7 +343,7 @@ void TTT::WinCheck() // need another check for X and O
 		cout << currentPos[5] << " wins!" << endl << endl;
 		if (currentPos[5] == 'X')
 		{
-			cout << "You've gained one win!\n";
+			cout << "You've gained one win!\n\n";
 		}
 	}
 	else if (currentPos[0] == currentPos[4] && currentPos[4] == currentPos[8] && (currentPos[4] == 'X' || currentPos[4] == 'O'))
@@ -332,7 +352,7 @@ void TTT::WinCheck() // need another check for X and O
 		cout << currentPos[4] << " wins!" << endl << endl;
 		if (currentPos[4] == 'X')
 		{
-			cout << "You've gained one win!\n";
+			cout << "You've gained one win!\n\n";
 		}
 	}
 	else if (currentPos[2] == currentPos[4] && currentPos[4] == currentPos[6] && (currentPos[4] == 'X' || currentPos[4] == 'O'))
@@ -341,7 +361,7 @@ void TTT::WinCheck() // need another check for X and O
 		cout << currentPos[4] << " wins!" << endl << endl;
 		if (currentPos[4] == 'X')
 		{
-			cout << "You've gained one win!\n";
+			cout << "You've gained one win!\n\n";
 		}
 	}
 
@@ -350,8 +370,9 @@ void TTT::WinCheck() // need another check for X and O
 void TTT::Display()
 {
 	system("cls");
-	cout << "Any number above 10 will clear the Board!\n\n";
-	cout << "\n" << currentPos[0] << "|" << currentPos[1] << "|" << currentPos[2] << endl;
+	cout << "Type 10 to quit the game,\n";
+	cout << "Type a number above 10 to clear the Board!\n\n\n";
+	cout << currentPos[0] << "|" << currentPos[1] << "|" << currentPos[2] << endl;
 	cout << "-+-+-" << endl;
 	cout << currentPos[3] << "|" << currentPos[4] << "|" << currentPos[5] << endl;
 	cout << "-+-+-" << endl;
@@ -390,7 +411,7 @@ void Saves()
 
 	if (inputFile)
 	{
-		cout << "\n\nIt exists!\n";
+		cout << "\nAccount found!\n";
 		cout << "Welcome " + name + "!\n";
 
 		inputFile >> PvAScore >> PvPScore;

@@ -12,6 +12,7 @@ public:
 	// game loop
 	bool gameOver = false;
 	bool gameRunning = false;
+	bool quitGame = false;
 
 	char currentPos[10] = "        ";
 	// functions
